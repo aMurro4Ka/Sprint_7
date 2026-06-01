@@ -2,17 +2,16 @@ import static org.hamcrest.CoreMatchers.equalTo;
 
 import courier.Courier;
 import courier.CourierData;
-import courier.CourierStepMethods;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import order.Client;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static io.restassured.RestAssured.given;
+
 
 //Класс тестов для проверки создания курьеров через API
 public class CreateCourierTest extends Client {

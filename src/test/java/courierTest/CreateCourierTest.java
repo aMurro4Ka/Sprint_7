@@ -1,8 +1,13 @@
-package courierTest;
+package couriertest;
 
 import static constants.ApiConstants.SCOOTER_URL;
 import static org.hamcrest.CoreMatchers.equalTo;
 
+import static constants.ApiConstants.SCOOTER_URL;
+import static org.apache.http.HttpStatus.SC_BAD_REQUEST;
+import static org.apache.http.HttpStatus.SC_CONFLICT;
+import static org.apache.http.HttpStatus.SC_CREATED;
+import static org.hamcrest.CoreMatchers.equalTo;
 import courier.Courier;
 import courier.CourierDataForTest;
 import courier.CourierStepMethods;
@@ -48,17 +53,18 @@ public class CreateCourierTest {
 
     @Step("Проверка успешного создания курьера")
     public void validateSuccessfulCreation(Response response) {
-        response.then().assertThat().statusCode(201)
+        response.then().assertThat().statusCode(SC_CREATED)
                 .and()
                 .body("ok", equalTo(true));
     }
 
-    @Step("Проверка ошибки создания курьера с ожидаемым статусом {expectedStatusCode} и сообщением {expectedMessage}")
+    @Step("Проверка ошибки создания курьера с ожидаемым статусом и сообщением")
     public void validateCreationError(Response response, int expectedStatusCode, String expectedMessage) {
         response.then().assertThat().statusCode(expectedStatusCode)
                 .and()
                 .assertThat().body("message", equalTo(expectedMessage));
     }
+
 
     //Тест на создание курьера с валидно заполненными полями.
     @Test
@@ -85,7 +91,7 @@ public class CreateCourierTest {
         // Отправляю запрос на создание курьера
         Response response = createCourierAndGetResponse(courier);
         // Проверяю статус код и тело ответа
-        validateCreationError(response, 400, "Недостаточно данных для создания учетной записи");
+        validateCreationError(response, SC_BAD_REQUEST, "Недостаточно данных для создания учетной записи");
     }
 
     //Тест на создание курьера без пароля.
@@ -98,7 +104,7 @@ public class CreateCourierTest {
         // Отправляю запрос на создание курьера
         Response response = createCourierAndGetResponse(courier);
         // Проверяю статус код и тело ответа
-        validateCreationError(response, 400, "Недостаточно данных для создания учетной записи");
+        validateCreationError(response, SC_BAD_REQUEST, "Недостаточно данных для создания учетной записи");
     }
 
     //Тест на создание двух одинаковых курьеров.
@@ -115,6 +121,6 @@ public class CreateCourierTest {
         // Получаю id курьера после его создания
         id = getCourierId(courier);
         // Проверяю статус код и тело ответа
-        validateCreationError(response, 409, "Этот логин уже используется. Попробуйте другой.");
+        validateCreationError(response, SC_CONFLICT, "Этот логин уже используется. Попробуйте другой.");
     }
 }

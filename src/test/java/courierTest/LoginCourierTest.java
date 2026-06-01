@@ -1,4 +1,4 @@
-package courierTest;
+package couriertest;
 
 import static constants.ApiConstants.SCOOTER_URL;
 import static org.hamcrest.CoreMatchers.equalTo;

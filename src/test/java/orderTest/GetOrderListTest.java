@@ -1,4 +1,4 @@
-package orderTest;
+package ordertest;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
