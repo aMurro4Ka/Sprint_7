@@ -2,6 +2,8 @@ package ordertest;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
+import io.qameta.allure.Step;
+import io.qameta.allure.Feature;
 import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
 import order.OrderStepMethods;
@@ -13,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static constants.ApiConstants.SCOOTER_URL;
+
 
 //Класс теста для проверки того, что в тело ответа возвращается список заказов.
 public class GetOrderListTest {

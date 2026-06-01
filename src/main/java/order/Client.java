@@ -9,7 +9,6 @@ import io.restassured.specification.RequestSpecification;
 
 import static constants.ApiConstants.SCOOTER_URL;
 
-
 public class Client {
     protected RequestSpecification requestSpec; // Объявление переменной для хранения спецификации запроса
 

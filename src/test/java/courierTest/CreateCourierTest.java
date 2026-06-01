@@ -3,16 +3,17 @@ package couriertest;
 import static constants.ApiConstants.SCOOTER_URL;
 import static org.hamcrest.CoreMatchers.equalTo;
 
-import static constants.ApiConstants.SCOOTER_URL;
+
 import static org.apache.http.HttpStatus.SC_BAD_REQUEST;
 import static org.apache.http.HttpStatus.SC_CONFLICT;
 import static org.apache.http.HttpStatus.SC_CREATED;
-import static org.hamcrest.CoreMatchers.equalTo;
+
 import courier.Courier;
 import courier.CourierDataForTest;
 import courier.CourierStepMethods;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
+import io.qameta.allure.Feature;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;

@@ -9,12 +9,14 @@ import courier.CourierDataForTest;
 import courier.CourierStepMethods;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
+import io.qameta.allure.Feature;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
 
 
 //Класс тестов для проверки авторизации курьеров через API

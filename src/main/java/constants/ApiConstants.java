@@ -1,7 +1,6 @@
 package constants;
 
 
-
 //Класс ApiConstants содержит константы для адреса Яндекс.Самокат и ручек API.
  public class ApiConstants {
 

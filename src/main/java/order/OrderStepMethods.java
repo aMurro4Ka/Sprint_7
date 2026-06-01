@@ -8,8 +8,6 @@ import static constants.ApiConstants.CANCEL_ORDER;
 import static constants.ApiConstants.ORDER;
 import static io.restassured.RestAssured.given;
 
-
-
 public class OrderStepMethods extends Client {
 
 
