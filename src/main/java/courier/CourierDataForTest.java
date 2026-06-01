@@ -2,7 +2,6 @@ package courier;
 
 import java.util.Random;
 
-
 public class CourierDataForTest {
     private final String existingLogin;
     private final String nonExistentLogin;

@@ -9,7 +9,6 @@ import courier.CourierDataForTest;
 import courier.CourierStepMethods;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
-import io.qameta.allure.Feature;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
@@ -17,19 +16,31 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-
-
 //Класс тестов для проверки авторизации курьеров через API
 public class LoginCourierTest {
     // Объект для получения тестовых данных
     private final CourierDataForTest courierDataForTest = new CourierDataForTest();
     // Переменная для хранения id курьера
-    String id = null;
+    private String id = null;
+    // Курьер для позитивного теста
+    private Courier validCourier;
 
-    //Устанавливаю базовый URI для RestAssured
+    //Устанавливаю базовый URI для RestAssured и создаю тестового курьера
     @Before
     public void setUp() {
         RestAssured.baseURI = SCOOTER_URL;
+
+        // Создаю объект курьера с валидными данными ДО теста
+        validCourier = new Courier(
+                courierDataForTest.getExistingLogin(),
+                courierDataForTest.getExistingPassword()
+        );
+
+        // Создаю курьера в системе перед выполнением тестов
+        createCourier(validCourier);
+
+        // Получаю id курьера после успешной авторизации (если нужно для tearDown)
+        id = loginAndGetId(validCourier);
     }
 
     @After
@@ -70,14 +81,8 @@ public class LoginCourierTest {
     @DisplayName("Успешный логин курьера")
     @Description("Логин курьера в системе. Курьер может авторизоваться. Успешный запрос возвращает id.")
     public void loginCourier() {
-        // Создаю объект курьера с валидными данными
-        Courier courier = new Courier(courierDataForTest.getExistingLogin(), courierDataForTest.getExistingPassword());
-        // Создаю курьера перед выполнением теста
-        createCourier(courier);
-        // Получаю id курьера после успешной авторизации
-        id = loginAndGetId(courier);
         // Отправляю запрос на логин и проверяю статус код и наличие ID в теле ответа
-        Response response = CourierStepMethods.loginCourier(courier);
+        Response response = CourierStepMethods.loginCourier(validCourier);
         validateSuccessfulLogin(response);
     }
 
@@ -86,9 +91,7 @@ public class LoginCourierTest {
     @DisplayName("Авторизация курьера без логина")
     @Description("Для авторизации курьера необходимо передать все обязательные поля. Передаётся пустой логин")
     public void authorizationCourierWithoutLogin() {
-        // Создаю объект курьера без логина
         Courier courier = new Courier("", courierDataForTest.getExistingPassword());
-        // Отправляю запрос на авторизацию и проверяю статус код и тело ответа
         Response response = CourierStepMethods.loginCourier(courier);
         validateLoginError(response, 400, "Недостаточно данных для входа");
     }
@@ -98,9 +101,7 @@ public class LoginCourierTest {
     @DisplayName("Авторизация курьера без пароля")
     @Description("Для авторизации курьера необходимо передать все обязательные поля. Передается пустой пароль курьера")
     public void authorizationCourierWithoutPassword() {
-        // Создаю объект курьера без пароля
         Courier courier = new Courier(courierDataForTest.getExistingLogin(), "");
-        // Отправляю запрос на авторизацию и проверяю статус код и тело ответа
         Response response = CourierStepMethods.loginCourier(courier);
         validateLoginError(response, 400, "Недостаточно данных для входа");
     }
@@ -110,9 +111,7 @@ public class LoginCourierTest {
     @DisplayName("Авторизация курьера c неправильным логином")
     @Description("Для авторизации курьера необходимо передать существующие данные. Передается неправильный логин")
     public void authorizationCourierWithNonExistentLogin() {
-        // Создаю объект курьера с неправильным логином
         Courier courier = new Courier(courierDataForTest.getNonExistLogin(), courierDataForTest.getExistingPassword());
-        // Отправляю запрос на авторизацию и проверяю статус код и тело ответа
         Response response = CourierStepMethods.loginCourier(courier);
         validateLoginError(response, 404, "Учетная запись не найдена");
     }
@@ -122,9 +121,7 @@ public class LoginCourierTest {
     @DisplayName("Авторизация курьера c неправильным паролем")
     @Description("Для авторизации курьера необходимо передать существующие данные. Передается неверный пароль курьера")
     public void authorizationCourierWithNonExistentPassword() {
-        // Создаю объект курьера с неправильным паролем
         Courier courier = new Courier(courierDataForTest.getExistingLogin(), courierDataForTest.getNonExistPassword());
-        // Отправляю запрос на авторизацию и проверяю статус код и тело ответа
         Response response = CourierStepMethods.loginCourier(courier);
         validateLoginError(response, 404, "Учетная запись не найдена");
     }

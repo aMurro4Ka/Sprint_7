@@ -22,6 +22,7 @@ public class GetOrderListTest {
     // Создаю приватное поле orderStepMethods типа OrderStepMethods
     private OrderStepMethods orderStepMethods;
 
+
     @Before
     public void setUp() {
         // Устанавливаю базовый URI перед каждым тестом

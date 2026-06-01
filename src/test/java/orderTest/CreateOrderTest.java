@@ -16,6 +16,7 @@ import org.junit.Test;
 import static constants.ApiConstants.SCOOTER_URL;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
+
 public class CreateOrderTest {
     private static final String firstName = "Артас";
     private static final String lastName = "Менетил";
